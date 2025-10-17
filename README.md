@@ -2,7 +2,7 @@
 
 Este projeto é uma estrutura completa e robusta para automação de testes web utilizando Playwright, TypeScript e o padrão Page Object Model (POM). Ele está pré-configurado para testar o site de demonstração [Sauce Demo](https://www.saucedemo.com/) e inclui integração com relatórios Allure e um workflow de GitHub Actions.
 
-## ✨ Funcionalidades
+##  Funcionalidades
 
 - **Padrão de Projeto:** Page Object Model (POM) com uma classe base para reutilização de código.
 - **Gerenciamento de Dados:** Separação dos dados de teste (usuários/senhas) em um arquivo `fixtures/users.json`, mantendo o código limpo e seguro.
@@ -18,7 +18,7 @@ Antes de começar, garanta que você tenha os seguintes softwares instalados:
 - [Node.js](https://nodejs.org/) (versão 18.x ou superior recomendada)
 - npm (geralmente instalado junto com o Node.js)
 
-## 🚀 Guia de Instalação e Execução
+##  Guia de Instalação e Execução
 
 ### 1. Preparar o Projeto
 
