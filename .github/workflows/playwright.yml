@@ -35,14 +35,14 @@ jobs:
 
     - name: Run Playwright tests for QA environment
       env:
-        # Define a URL base que estava faltando no ambiente de CI
         BASE_URL: https://www.saucedemo.com
       run: npm run test:qa
-      continue-on-error: true # Mantém para gerar relatório mesmo com falha
+      continue-on-error: true
 
     - name: Generate Allure Report
-      npm install -g allure-commandline --save-dev
-      run: npx allure generate allure-results --clean -o allure-report
+      run: |
+        npm install -g allure-commandline --save-dev
+        npx allure generate allure-results --clean -o allure-report
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
