@@ -1,0 +1,16 @@
+# Dependencies
+/node_modules
+
+# Test Results
+/test-results/
+/playwright-report/
+/allure-results/
+/allure-report/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Arquivos de dados de teste
+/fixtures/users.json
