@@ -17,16 +17,12 @@ jobs:
       with:
         node-version: '18.x'
 
-    # NOVO PASSO PARA O CACHE
     - name: Cache Playwright Browsers
       uses: actions/cache@v4
-      id: playwright-cache # ID para verificar se o cache foi encontrado
+      id: playwright-cache
       with:
-        # Onde os navegadores são armazenados no runner do Linux
-        path: ~/.cache/ms-playwright 
-        # A chave de cache. Se o package-lock.json mudar, a chave muda e o cache é invalidado.
+        path: ~/.cache/ms-playwright
         key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
-        # Uma chave de restauração para tentar encontrar um cache parcial se a chave exata falhar
         restore-keys: |
           ${{ runner.os }}-playwright-
 
@@ -34,16 +30,18 @@ jobs:
       run: npm install
 
     - name: Install Playwright Browsers
-      # Só executa este passo se o cache não foi encontrado (cache miss)
       if: steps.playwright-cache.outputs.cache-hit != 'true'
       run: npx playwright install --with-deps
 
     - name: Run Playwright tests for QA environment
+      env:
+        # Define a URL base que estava faltando no ambiente de CI
+        BASE_URL: https://www.saucedemo.com
       run: npm run test:qa
-      continue-on-error: true
+      continue-on-error: true # Mantém para gerar relatório mesmo com falha
 
     - name: Generate Allure Report
-      run: npm run allure:generate
+      run: npx allure generate allure-results --clean -o allure-report
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
