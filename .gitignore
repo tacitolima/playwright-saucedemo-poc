@@ -13,4 +13,4 @@
 !.env.example
 
 # Arquivos de dados de teste
-/fixtures/users.json
+#/fixtures/users.json

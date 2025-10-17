@@ -11,16 +11,33 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Use Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: '18.x'
+
+    # NOVO PASSO PARA O CACHE
+    - name: Cache Playwright Browsers
+      uses: actions/cache@v4
+      id: playwright-cache # ID para verificar se o cache foi encontrado
+      with:
+        # Onde os navegadores são armazenados no runner do Linux
+        path: ~/.cache/ms-playwright 
+        # A chave de cache. Se o package-lock.json mudar, a chave muda e o cache é invalidado.
+        key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+        # Uma chave de restauração para tentar encontrar um cache parcial se a chave exata falhar
+        restore-keys: |
+          ${{ runner.os }}-playwright-
+
     - name: Install dependencies
       run: npm install
+
     - name: Install Playwright Browsers
+      # Só executa este passo se o cache não foi encontrado (cache miss)
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
       run: npx playwright install --with-deps
-      
+
     - name: Run Playwright tests for QA environment
       run: npm run test:qa
       continue-on-error: true
